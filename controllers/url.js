@@ -25,7 +25,7 @@ const HandleRedirect = async (req, res) => {
         },
         {
             $push: {
-                vistiHistory: {
+                visitHistory: {
                     timestamp: Date.now(),
                 },
             },
@@ -34,4 +34,13 @@ const HandleRedirect = async (req, res) => {
     res.redirect(entry.redirectURL);
 };
 
-module.exports = {GenerateNewShortURL, HandleRedirect};
+const HandleAnalytics = async (req, res) => {
+    const shortId = req.params.shortId;
+    const result = await URL.findOne({ shortId });
+    return res.json({
+        totalClicks: result.visitHistory.length,
+        analytics: result.visitHistory,
+    });
+};
+
+module.exports = {GenerateNewShortURL, HandleRedirect, HandleAnalytics};

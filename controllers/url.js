@@ -17,4 +17,21 @@ const GenerateNewShortURL = async (req, res) => {
     return res.json({id: shortID});
 };
 
-module.exports = {GenerateNewShortURL};
+const HandleRedirect = async (req, res) => {
+    const shortId = req.params.shortId;
+    const entry = await URL.findOneAndUpdate(
+        {
+            shortId,
+        },
+        {
+            $push: {
+                vistiHistory: {
+                    timestamp: Date.now(),
+                },
+            },
+        }
+    );
+    res.redirect(entry.redirectURL);
+};
+
+module.exports = {GenerateNewShortURL, HandleRedirect};

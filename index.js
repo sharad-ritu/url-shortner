@@ -5,6 +5,7 @@ const urlRoutes = require('./routes/url');
 const connectToMongoDB = require('./connection/connect');
 const PORT = 5000;
 
+app.use(express.json());
 app.use('/url', urlRoutes);
 
 const start = async () => {

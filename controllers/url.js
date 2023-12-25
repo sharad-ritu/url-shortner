@@ -44,7 +44,8 @@ const HandleAnalytics = async (req, res) => {
 };
 
 const getUrls = async (req, res) => {
-    return res.render('home');
+    const allUrls = await URL.find({});
+    return res.render('home', { urls: allUrls});
 };
 
 module.exports = {GenerateNewShortURL, HandleRedirect, HandleAnalytics, getUrls};

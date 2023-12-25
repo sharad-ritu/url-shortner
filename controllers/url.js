@@ -14,7 +14,7 @@ const GenerateNewShortURL = async (req, res) => {
         visitHistory: [],
     });
 
-    return res.json({id: shortID});
+    res.render('home', { id: shortID});
 };
 
 const HandleRedirect = async (req, res) => {
@@ -43,4 +43,8 @@ const HandleAnalytics = async (req, res) => {
     });
 };
 
-module.exports = {GenerateNewShortURL, HandleRedirect, HandleAnalytics};
+const getUrls = async (req, res) => {
+    return res.render('home');
+};
+
+module.exports = {GenerateNewShortURL, HandleRedirect, HandleAnalytics, getUrls};

@@ -7,7 +7,19 @@ const createUser = async (req, res) => {
         email,
         password,
     });
-    return res.render('home');
+    return res.render('login');
 };
 
-module.exports = { createUser };
+const handleLogin = async (req, res) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({
+        email,
+        password,
+    });
+    if (!user) {
+        return res.render('login', { error: 'Invalid username or password.' });
+    }
+    return res.redirect('/');
+};
+
+module.exports = { createUser, handleLogin };

@@ -12,4 +12,13 @@ const isLoggedIn = async (req, res, next) => {
     next();
 };
 
-module.exports = { isLoggedIn };
+const checkAuth = (req, res, next) => {
+    const uid = req.cookies?.userId;
+
+    const user = getUser(uid);
+
+    req.user = user;
+    next();
+};
+
+module.exports = { isLoggedIn, checkAuth };

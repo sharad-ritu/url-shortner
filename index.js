@@ -4,7 +4,7 @@ const path = require('path');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 
-const { isLoggedIn } = require('./middleware/auth');
+const { isLoggedIn, checkAuth } = require('./middleware/auth');
 
 const urlRoutes = require('./routes/url');
 const staticRoutes = require('./routes/staticRouter'); 
@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 app.use('/url', isLoggedIn, urlRoutes);
-app.use('/', staticRoutes);
+app.use('/', checkAuth, staticRoutes);
 app.use('/user', userRoutes);
 
 app.get('/home', (req, res) => {
